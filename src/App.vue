@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <MouseCheck :title="'校验'" :src="dImg" />
+    <MouseCheck :title="'校验'" :width="300" :src="dImg" @check="handleCheck" />
   </div>
 </template>
 
@@ -8,6 +8,13 @@
 import dImg from './assets/img/d.webp'
 import MouseCheck from '../packages/index'
 
+const handleCheck = (val: boolean) => {
+  if(val){
+    console.log('校验成功');
+  }else{
+    console.log('校验失败');
+  }
+}
 
 </script>
 

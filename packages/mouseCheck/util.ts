@@ -1,10 +1,15 @@
 
 interface MaskInfo_Inter {
-    x: number,
-    y: number,
-    size: number
+    x: number;
+    y: number;
+    size: number;
 }
 
+
+interface CheckResult_Inter {
+    value: boolean;
+    isCheck: boolean;
+}
 
 class RandomPos {
     _value: number
@@ -49,8 +54,10 @@ class CanvasUtil {
             img.src = this.src
             img.onerror = () => reject()
             img.onload = () => {
-                img.width = this.bgCanvas.width
-                img.height = this.bgCanvas.height
+                // img.width = this.bgCanvas.width
+                // img.height = this.bgCanvas.height
+                this.bgCanvas.width = img.width
+                this.bgCanvas.height = img.height
                 this.bgCtx.drawImage(img, 0, 0, this.bgCanvas.width, this.bgCanvas.height)
                 resolve()
             }
@@ -65,35 +72,44 @@ class CanvasUtil {
     }
     drawMask() {
         const { x, y, size } = this.getMaskInfo()
-        this.bgCtx.fillStyle = 'rgba(255, 255, 0, 0.6)'
+        this.bgCtx.fillStyle = 'rgba(0, 0, 0, 0.5)'
         this.bgCtx.fillRect(x, y, size, size)
     }
     drawMove(moveX: number = 0) {
         let img = new Image()
         img.src = this.src
         img.onload = () => {
-            img.width = this.canvas.width
-            img.height = this.canvas.height
+            // img.width = this.canvas.width
+            // img.height = this.canvas.height
+            this.canvas.width = img.width
+            this.canvas.height = img.height
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-            const { y, size } = this.getMaskInfo()
-            this.ctx.drawImage(img, moveX || 0, y, size, size)
+            const { x, y, size } = this.getMaskInfo()
+            this.ctx.drawImage(img, x, y, size, size, moveX || 0, y, size, size)
         }
     }
-    move(x: number, action: number): void {
+    move(x: number): void {
         this.drawMove(x)
-        this.check(x, action)
     }
-    check(x: number, action: number) {
+    check(x: number, action: number): CheckResult_Inter {
         const checkList = [2, 3]
         if (checkList.includes(action)) {
-            if(Math.abs(x - this.xRandom.value) <= this.misSize){
-                console.log('success');
-            }else{
-                console.log('error');
-                
+            if (Math.abs(x - this.xRandom.value) <= this.misSize) {
+                return {
+                    isCheck: true,
+                    value: true
+                }
+            } else {
+                return {
+                    isCheck: true,
+                    value: false
+                }
             }
         }
-
+        return {
+            isCheck: false,
+            value: false
+        }
     }
 }
 

@@ -38,6 +38,7 @@ const maxLeft = computed<number>(() => {
 
 const x = ref<number>(0)
 const isDwon = ref<boolean>(false)
+const isMove = ref<boolean>(false)
 let oldPos = reactive<Pos_Inter>({
     x: 0,
 })
@@ -53,9 +54,11 @@ const handleDown = (e: MouseEvent) => {
     trigger(0)
 }
 const handleMove = (e: MouseEvent) => {
+    
     if (!currentTime || Date.now() - currentTime > 30) {
         currentTime = Date.now()
         if (isDwon.value) {
+            isMove.value = true
             let dis = e.clientX - oldPos.x
             dis < 0 && (dis = 0)
             dis > maxLeft.value && (dis = maxLeft.value)
@@ -65,12 +68,16 @@ const handleMove = (e: MouseEvent) => {
     }
 }
 const handleUp = (e: MouseEvent) => {
-    trigger(2)
+    if(isMove.value){
+        trigger(2)
+    }
     isDwon.value = false
+    isMove.value = false
 }
 const handleLeave = () => {
-    if(isDwon.value){
+    if(isDwon.value && isMove.value){
         isDwon.value = false
+        isMove.value = false
         trigger(3)
     }
 }
