@@ -9,16 +9,18 @@ export default defineConfig({
   plugins: [
     vue(),
     dts({
-      insertTypesEntry: true,
-      outputDir: 'dist/types',
-      copyDtsFiles: true
+      // insertTypesEntry: true,
+      // outputDir: 'dist/types',
+      // copyDtsFiles: true,
+      rollupTypes: true,
+      include: 'packages'
     })
   ],
   build: {
     lib: {
       entry: resolve(__dirname, './packages/index.ts'),
       name: pkg.name,
-      fileName: format => `${pkg.name}.${format}.js`
+      // fileName: format => `${pkg.name}.${format}.js`
     },
     sourcemap: true,
     rollupOptions: {

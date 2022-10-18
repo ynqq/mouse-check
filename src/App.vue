@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import dImg from './assets/img/d.webp'
-import MouseCheck from '../packages/index'
+import MouseCheck from 'asd'
 
 const handleCheck = (val: boolean) => {
   if(val){

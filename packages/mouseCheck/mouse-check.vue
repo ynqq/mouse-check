@@ -12,18 +12,18 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue';
 import CanvasUtil from './util'
-import MouseMove, { Move_Inter } from '../mouseMove/mouse-move.vue'
+import MouseMove from '../mouseMove/mouse-move.vue'
+import { Move_Inter } from '../types';
 
-interface Props {
+export interface Props {
   src: string,
   title: string,
   width?: number
 }
 
-interface Emits {
+export interface Emits {
   (event: 'check', val: boolean): void
 }
-
 let util: CanvasUtil
 
 const props = withDefaults(defineProps<Props>(), {

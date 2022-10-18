@@ -8,9 +8,8 @@
 <script setup lang="ts">
 
 import { computed, reactive, ref } from 'vue';
-export interface Move_Inter {
-    x: number, action: number
-}
+import { Move_Inter } from '../types';
+
 interface Emits_Inter {
     (event: 'move', val: Move_Inter): void,
 }
