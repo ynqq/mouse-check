@@ -67,7 +67,7 @@ const handleMove = (e: MouseEvent) => {
         }
     }
 }
-const handleUp = (e: MouseEvent) => {
+const handleUp = () => {
     if(isMove.value){
         trigger(2)
     }
