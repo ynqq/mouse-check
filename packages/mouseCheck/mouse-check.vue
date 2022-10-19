@@ -15,22 +15,25 @@ import CanvasUtil from './util'
 import MouseMove from '../mouseMove/mouse-move.vue'
 import { Move_Inter } from '../types';
 
-export interface Props {
+
+export interface Mouse_Check_Props {
   src: string,
   title: string,
   width?: number
 }
 
-export interface Emits {
-  (event: 'check', val: boolean): void
+export interface Mouse_Check_Emits {
+  (e: 'check', val: boolean): void
 }
+
+
 let util: CanvasUtil
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Mouse_Check_Props>(), {
   width: 300
 })
 
-const emits = defineEmits<Emits>()
+const emits = defineEmits<Mouse_Check_Emits>()
 const mouseMove = ref()
 
 const height = computed(() => {
@@ -102,6 +105,7 @@ export default {
 .mouse-check {
   position: relative;
   overflow: hidden;
+  width: v-bind(cssW);
 
   &.mouse-check-fail {
     animation: headShake .8s linear;
@@ -143,6 +147,11 @@ export default {
     position: absolute;
     left: 0;
     top: 0;
+    z-index: 1;
+  }
+  #mouse-canvas{
+    position: relative;
+    z-index: 2;
   }
 
   #mouse-canvase {

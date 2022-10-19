@@ -12,8 +12,9 @@ export default defineConfig({
       // insertTypesEntry: true,
       // outputDir: 'dist/types',
       // copyDtsFiles: true,
-      rollupTypes: true,
-      include: 'packages'
+      rollupTypes: true, // 整合.d.ts文件
+      // cleanVueFileName: true, // 将.vue.d.ts 改为.d.ts
+      include: 'packages', // 包含的文件目录
     })
   ],
   build: {

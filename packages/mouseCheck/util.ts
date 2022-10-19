@@ -27,6 +27,7 @@ class CanvasUtil {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     src: string;
+    drawSrc?: string;
     misSize: number;
     xRandom: RandomPos;
     yRandom: RandomPos;
@@ -41,21 +42,42 @@ class CanvasUtil {
         this.yRandom = new RandomPos(Math.min(60, this.canvas.height), this.canvas.height - 60)
         this.init()
     }
-    initRandom() {
-    }
     async init() {
+        await this.getImg()
         await this.drawBG()
         this.drawMask()
         this.drawMove()
     }
+    // 将图片重绘
+    getImg():Promise<string>{
+        return new Promise((resolve, reject) => {
+            let canvasEl = document.createElement('canvas')
+            canvasEl.width = this.bgCanvas.width
+            canvasEl.height = this.bgCanvas.height
+            let ctx = canvasEl.getContext('2d')!
+            let img = new Image()
+            img.src = this.src
+            img.onload = () => {
+                img.width = canvasEl.width
+                img.height = canvasEl.height
+                ctx.fillStyle = 'rgba(0, 0, 0, 0)'
+                ctx?.fillRect(0, 0, canvasEl.width, canvasEl.height)
+                ctx?.drawImage(img, 0, 0, canvasEl.width, canvasEl.height)
+                const data = canvasEl.toDataURL()
+                this.drawSrc = data
+                resolve(data)
+            }
+            img.onerror = () => {
+                reject('图片加载失败')
+            }
+        })
+    }
     drawBG() {
         return new Promise<void>((resolve, reject) => {
             const img = new Image()
-            img.src = this.src
+            img.src = this.drawSrc!
             img.onerror = () => reject()
             img.onload = () => {
-                // img.width = this.bgCanvas.width
-                // img.height = this.bgCanvas.height
                 this.bgCanvas.width = img.width
                 this.bgCanvas.height = img.height
                 this.bgCtx.drawImage(img, 0, 0, this.bgCanvas.width, this.bgCanvas.height)
@@ -77,10 +99,8 @@ class CanvasUtil {
     }
     drawMove(moveX: number = 0) {
         let img = new Image()
-        img.src = this.src
+        img.src = this.drawSrc!
         img.onload = () => {
-            // img.width = this.canvas.width
-            // img.height = this.canvas.height
             this.canvas.width = img.width
             this.canvas.height = img.height
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)

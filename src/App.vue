@@ -5,8 +5,10 @@
 </template>
 
 <script setup lang="ts">
+import "../dist/style.css"
 import dImg from './assets/img/d.webp'
-import MouseCheck from 'asd'
+import MouseCheck from '../dist/mouse-check'
+// import MouseCheck from '../packages/index'
 
 const handleCheck = (val: boolean) => {
   if(val){
@@ -20,8 +22,6 @@ const handleCheck = (val: boolean) => {
 
 <style scoped>
 .app{
-  display: flex;
-  justify-content: center;
   padding-top: 100px;
 }
 </style>
