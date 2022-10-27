@@ -19,7 +19,9 @@ import { Move_Inter } from '../types';
 export interface Mouse_Check_Props {
   src: string,
   title: string,
-  width?: number
+  width?: number,
+  onFulfilled?: (val: boolean) => any,
+  onRejected?: (val: boolean) => any
 }
 
 export interface Mouse_Check_Emits {
@@ -63,11 +65,13 @@ const handleMove = (e: Move_Inter) => {
 
 const handleSuccess = () => {
   success.value = true
+  props.onFulfilled && props.onFulfilled(true)
   emits('check', true)
   handleReset()
 }
 const handleFail = () => {
   success.value = false
+  props.onRejected && props.onRejected(false)
   emits('check', false)
   handleReset()
 }

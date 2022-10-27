@@ -1,27 +1,28 @@
 <template>
-  <div class="app">
-    <MouseCheck :title="'校验'" :width="300" :src="dImg" @check="handleCheck" />
+  <div class="app" @click="handleCheck">
   </div>
 </template>
 
 <script setup lang="ts">
 import "../dist/style.css"
 import dImg from './assets/img/d.webp'
-import MouseCheck from '../dist/mouse-check'
-// import MouseCheck from '../packages/index'
-
-const handleCheck = (val: boolean) => {
-  if(val){
-    console.log('校验成功');
-  }else{
-    console.log('校验失败');
-  }
+import { check } from '../packages/utils'
+const handleCheck = () => {
+  check({
+    src: dImg,
+    title: 'check'
+  }).then(() => {
+    console.log('check ok');
+    
+  }).catch(() => {
+    console.log('check fail');
+    
+  })
 }
-
 </script>
 
 <style scoped>
 .app{
-  padding-top: 100px;
+  padding: 100px;
 }
 </style>
