@@ -10,12 +10,19 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "lib": "vite build --mode lib"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/mouse-check.js",
+      "require": "./dist/mouse-check.umd.cjs"
+    }
+  },
   "files": [
     "/dist"
   ],
   "type": "module",
   "types": "./dist/index.d.ts",
-  "main": "dist/mouse-check.js",
+  "main": "./dist/mouse-check.umd.cjs",
+  "module": "./dist/mouse-check.js",
   "dependencies": {
     "pinia": "^2.0.21",
     "vue": "^3.2.38",

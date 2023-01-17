@@ -21,6 +21,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, './packages/index.ts'),
       name: pkg.name,
+      formats: ['cjs', 'es', 'umd'],
       // fileName: format => `${pkg.name}.${format}.js`
     },
     sourcemap: true,
